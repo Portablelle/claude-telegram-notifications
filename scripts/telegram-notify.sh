@@ -20,27 +20,10 @@ fi
 # Read hook input from stdin
 input=$(cat)
 
-# Debug logging - capture payload structure
-echo "$(date): $input" >> /tmp/claude-telegram-debug.log
-
-# Detect hook type and extract message accordingly
-hook_event=$(echo "$input" | jq -r '.hook_event_name // ""')
-tool_name=$(echo "$input" | jq -r '.tool_name // ""')
-
-if [[ "$hook_event" == "PreToolUse" && "$tool_name" == "AskUserQuestion" ]]; then
-  # PreToolUse for AskUserQuestion - extract question from tool_input
-  message=$(echo "$input" | jq -r '.tool_input.questions[0].question // "Claude Code has a question for you"')
-  notification_type="question"
-else
-  # Notification hook - use standard fields
-  message=$(echo "$input" | jq -r '.message // "Claude Code needs your attention"')
-  notification_type=$(echo "$input" | jq -r '.notification_type // "notification"')
-fi
-
-# Send Telegram notification
+# DEBUG: Send raw payload to Telegram for analysis
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
   -d "chat_id=$TELEGRAM_CHAT_ID" \
-  -d "text=🔔 Claude Code ($notification_type)
-$message" > /dev/null
+  -d "text=🔍 DEBUG PAYLOAD:
+$input" > /dev/null
 
 exit 0
