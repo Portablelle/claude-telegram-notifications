@@ -1,5 +1,4 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "portablelle-plugins",
   "version": "1.0.0",
   "description": "Claude Code plugins by Portablelle",
