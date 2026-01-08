@@ -2,10 +2,6 @@
 # Telegram Notifications for Claude Code
 # Sends a notification when Claude needs user attention
 
-# Debug logging
-echo "$(date): telegram-notify.sh called" >> /tmp/telegram-hook-debug.log
-echo "CLAUDE_PLUGIN_ROOT: ${CLAUDE_PLUGIN_ROOT}" >> /tmp/telegram-hook-debug.log
-
 # Read settings from project config (YAML frontmatter)
 CONFIG_FILE="${CLAUDE_PROJECT_DIR}/.claude/telegram-notifications.local.md"
 if [[ -f "$CONFIG_FILE" ]]; then
@@ -23,7 +19,6 @@ fi
 
 # Read hook input from stdin
 input=$(cat)
-echo "Input: $input" >> /tmp/telegram-hook-debug.log
 
 # Detect hook type and extract message accordingly
 hook_event=$(echo "$input" | jq -r '.hook_event_name // ""')
