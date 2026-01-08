@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "telegram-notifications",
-      "source": ".",
+      "source": "./",
       "description": "Telegram notifications for Claude Code",
       "category": "productivity"
     }
