@@ -1,0 +1,12 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "telegram-notifications",
+  "version": "1.0.0",
+  "description": "Send Telegram notifications when Claude Code needs attention or completes tasks",
+  "author": {
+    "name": "Portablelle"
+  },
+  "repository": "https://github.com/Portablelle/claude-telegram-notifications",
+  "license": "MIT",
+  "keywords": ["telegram", "notifications", "alerts"]
+}
