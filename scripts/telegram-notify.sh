@@ -20,10 +20,33 @@ fi
 # Read hook input from stdin
 input=$(cat)
 
-# DEBUG: Send raw payload to Telegram for analysis
+# Detect hook type
+hook_event=$(echo "$input" | jq -r '.hook_event_name // ""')
+tool_name=$(echo "$input" | jq -r '.tool_name // ""')
+notification_type=$(echo "$input" | jq -r '.notification_type // ""')
+
+# Handle different hook types
+if [[ "$hook_event" == "PreToolUse" && "$tool_name" == "AskUserQuestion" ]]; then
+  # PreToolUse for AskUserQuestion - extract and send the question
+  message=$(echo "$input" | jq -r '.tool_input.questions[0].question // "Claude Code has a question for you"')
+  label="question"
+elif [[ "$hook_event" == "Notification" && "$notification_type" == "permission_prompt" ]]; then
+  # Skip permission_prompt - PreToolUse already handles AskUserQuestion
+  exit 0
+elif [[ "$hook_event" == "Notification" ]]; then
+  # Other notifications (idle_prompt, etc.)
+  message=$(echo "$input" | jq -r '.message // "Claude Code needs your attention"')
+  label="$notification_type"
+else
+  # Unknown hook type - send generic message
+  message=$(echo "$input" | jq -r '.message // "Claude Code needs your attention"')
+  label="notification"
+fi
+
+# Send Telegram notification
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
   -d "chat_id=$TELEGRAM_CHAT_ID" \
-  -d "text=🔍 DEBUG PAYLOAD:
-$input" > /dev/null
+  -d "text=🔔 Claude Code ($label)
+$message" > /dev/null
 
 exit 0
