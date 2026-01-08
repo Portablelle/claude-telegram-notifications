@@ -1,7 +1,7 @@
 {
   "description": "Telegram notifications for Claude Code events",
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
         "matcher": "AskUserQuestion",
         "hooks": [
