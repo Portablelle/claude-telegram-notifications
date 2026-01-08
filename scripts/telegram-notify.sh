@@ -20,6 +20,9 @@ fi
 # Read hook input from stdin
 input=$(cat)
 
+# Debug logging - capture payload structure
+echo "$(date): $input" >> /tmp/claude-telegram-debug.log
+
 # Detect hook type and extract message accordingly
 hook_event=$(echo "$input" | jq -r '.hook_event_name // ""')
 tool_name=$(echo "$input" | jq -r '.tool_name // ""')
