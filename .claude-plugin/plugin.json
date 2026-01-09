@@ -1,6 +1,6 @@
 {
   "name": "telegram-notifications",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Send Telegram notifications when Claude Code needs attention or completes tasks",
   "author": {
     "name": "Portablelle"

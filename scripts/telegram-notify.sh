@@ -31,8 +31,9 @@ if [[ "$hook_event" == "PreToolUse" && "$tool_name" == "AskUserQuestion" ]]; the
   message=$(echo "$input" | jq -r '.tool_input.questions[0].question // "Claude Code has a question for you"')
   label="question"
 elif [[ "$hook_event" == "Notification" && "$notification_type" == "permission_prompt" ]]; then
-  # Skip permission_prompt - PreToolUse already handles AskUserQuestion
-  exit 0
+  # Permission prompt - Claude wants to proceed with edits
+  message=$(echo "$input" | jq -r '.message // "Claude wants to proceed"')
+  label="permission"
 elif [[ "$hook_event" == "Notification" ]]; then
   # Other notifications (idle_prompt, etc.)
   message=$(echo "$input" | jq -r '.message // "Claude Code needs your attention"')
