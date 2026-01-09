@@ -14,7 +14,15 @@ Get Telegram notifications when Claude Code needs your attention or completes a 
    /plugin install telegram-notifications@portablelle-plugins
    ```
 
-3. Configure your credentials in `.claude/telegram-notifications.local.md`:
+3. Run the setup command:
+   ```
+   /telegram-setup
+   ```
+   This will guide you through getting your bot token and automatically detect your chat ID.
+
+## Manual Configuration (Alternative)
+
+If you prefer manual setup, configure your credentials in `.claude/telegram-notifications.local.md`:
    ```markdown
    ---
    enabled: true
